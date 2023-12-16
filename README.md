@@ -1,2 +1,2 @@
-# mysql-training
+# MySQL Training
 mysql-training
