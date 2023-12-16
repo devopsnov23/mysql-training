@@ -10,22 +10,15 @@ applications will interact with this software in order to add or make changes to
 
 ### Types of DBMS
 
-« Hierarchical
-
+* Hierarchical
 * Network
-
 * Relational
-
 + Object-Oriented
   
 ### DBMS Examples
 
-+ MySQL
-
-+ MariaDB
-
-« Oracle Database
-
-+ Microsoft SQL Server
-
-+ PostgreSQL
+* MySQL
+* MariaDB
+* Oracle Database
+* Microsoft SQL Server
+* PostgreSQL
