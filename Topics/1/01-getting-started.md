@@ -23,10 +23,7 @@ applications will interact with this software in order to add or make changes to
 * Microsoft SQL Server
 * PostgreSQL
 
-Relational Database
-Management Systems (RDBMS)
-
-### About RDBMS
+### Relational Database Management Systems (RDBMS)
 
 + This refers to the software system that is used to interact and maintain a relational database.
 + Itstores data in a structured format using columns and rows
