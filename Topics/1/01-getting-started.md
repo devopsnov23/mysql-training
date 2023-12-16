@@ -13,7 +13,7 @@ applications will interact with this software in order to add or make changes to
 * Hierarchical
 * Network
 * Relational
-+ Object-Oriented
+* Object-Oriented
   
 ### DBMS Examples
 
