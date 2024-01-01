@@ -255,10 +255,99 @@ DROP CONSTRAINT book_title_uk;
 ```
 
 ### Adding data to a table   
+**INSERT Statement**  
+Adds Rows to a Table  
+There are two ways to use an insert statement...  
+- the VALUES keyword
+- the Subquery [SELECT statement]  
+
+```
+INSERT INTO publisher VALUES (
+5,
+'Jardin, Inc.',
+'55th Avenue',
+'Camden',
+'NJ');
+```
+
+```
+INSERT INTO publisher
+  (pub_id, name)
+VALUES
+  7, 'Healthtext');
+```
+
+```
+INSERT INTO author  (author_id, firstname, lastname)
+  SELECTeditor_id, firstname, lastname
+  FROM editor
+  WHERE lastname = 'Penny';
+```
 
 ### Changing data in a table   
 
+**UPDATE Statement**  
+Changes existing data for...  
+- A Single row
+- A group of rows
+- All rows in the table
+
+```
+UPDATE book
+   SET price = 17.99;
+
+UPDATE book
+   SET price = 17.99
+WHERE title = "Analyzing the Obsessive";
+
+UPDATE title
+   SET price = price * 2,
+      advance = advance + 1000
+WHERE ytd_sales > 10000;
+```
+
+Example  
+The publisher "Sunshine Publishers" has been relocated to Seattle, Washington.  All of the authors have moved to a Seattle commune at 123 Flower Street.  
+
+Make the appropriate changes to the author table.  
+```
+UPDATE author
+SET city = 'SEATTLE',
+   state = 'WA'
+WHERE author_id IN
+   (SELECT author_id FROM bookauthor
+    WHERE isbn IN
+	(SELECT isbn FROM book
+         WHERE pub_id =
+	    (SELECT pub_id FROM publisher
+             WHERE name = "Sunshine Publishers");
+```
+
 ### Removing data from a table   
+
+```
+DELETE FROM table_name
+[WHERE search_conditions];
+```
+
+```
+DELETE FROM book
+WHERE price = 2.99;
+```
+
+This deletes all rows from the book table, but does not delete the book table itself  
+```
+DELETE FROM book;
+```
+
+Another Example  
+```
+DELETE from author
+WHERE lastname IN
+  (SELECT lastname
+   FROM editors
+   WHERE editor_postition = 'Managing Editor');
+```
 
 ### Assignment  
 1. Create a Department table with a primary key of dept_num.
@@ -268,4 +357,8 @@ DROP CONSTRAINT book_title_uk;
 5. Create a non-unique index on the Editor name columns.
 6. Alter the Editor table to make the editor last name larger than it currently is.
 7. Add a birthdate column to the Editor table.
-8. Create a temporary table named stuff and then remove it from the database.  
+8. Create a temporary table named stuff and then remove it from the database.
+9. Write the statements to add a new book to the database. It's title is "KhanFused" by "George Takei" and it is published by "Sunshine Publishers"  Any INSERT statements you use should specify the explicit column names.  Make up the data for any other column that is required.
+10. Reduce the price of all books by 20% if they have sold under a thousand books this year.
+11. Delete all author that live in Oakland, CA.
+12.  'Sunshine Publishers' has gone out of business. Remove all relevant information from the database.  
