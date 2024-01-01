@@ -172,8 +172,62 @@ There is a way to do with this a self-join, as well, but that is generally more 
 
 
 ### Using a subquery Vs Self-Join 
+A Copy editor with an editor_id of 9 might be managed by the Managing editor with an editor_id of 5.  
+
+Imagine, if you will, that the editor table includes another column, manager_editor_id, that holds the manager's editor_id.  
+
+You could find the manager of a copy editor with a subquery like this...  
+
+Here is a simple subquery...  
+```
+SELECT lastname, firstname
+FROM editor
+WHERE editor_id IN
+  (SELECT manager_editor_id
+   FROM editor
+   WHERE editor_id = 3)
+ORDER BY 1;
+```
+Notice that the inner query is using the same table as the outer query.  
+
+To rewrite this as a "self-join" you must use different table aliases. This will "trick" SQL to think that there are two copies of the same table.  
+
+So the subquery rewritten as a self-join would look something like this...  
+```
+SELECT e2.lastname, e2.firstname
+FROM editor e1
+  JOIN editor e2 ON (e1.editor_id = e2.managing_editor_id)
+WHERE e1.editor_id = 3
+ORDER BY 1, 2;
+```
+
+This is hard to visualize and always use a subquery instead!  
 
 ### How data is organized in a relational database 
+
+One of the main reasons for storing and managing data in a relational database is to reduce data redundancy.  
+
+The author's first and last name, for example, are stored in the author table.  The names are not stored again in the book table.  If we need to see the author names along  
+with the book information you join the related tables to retrieve that information.  
+
+The only data that is commonly (and necessarily) repeated is stored in Foreign Key columns.  This is what allows us to connect the information in the tables back together.  
+
+So how do you design a relational database so that it follows these rules of non-redundancy? How do you know how to make connections between the tables?  
+
+The first technique is called Entity-Relationship Modeling and the second technique is known as Normalization.  
+
+You know that all data stored in a relational database is stored in a grid-like structure called a table. A table "looks like" a bit like a spreadsheet.  
+
+When creating a relational database, the first thing you do is think about something called "Entities". An entity is a person, place, or thing you want to keep track of. For example, if you are a publishing company you want to keep track of books and authors.  
+
+You have been working with a book table and an author table but before you get to the point of building tables, you need to start with the conceptual design involved with the author and book entities.  
+
+The relationship between books and authors is Many-to-Many... one author can write one or more (i.e. many) books and one book can have one or more (i.e. many) authors.  
+
+So, if you need to design a relational database, you gather the data you need to track (i.e. author's name, phone number, book titles, book type, etc.) and you then determine how to group the data into Entities.  
+Then you determine what is the relationship between those Entities (e.g. One-to-Many, Many-to-Many.)  
+
+Lastly, you apply the Normalization guidelines to reduce data redundancy.  
 
 ### The Entity-Relationship Approach
 
@@ -184,6 +238,15 @@ There is a way to do with this a self-join, as well, but that is generally more 
 2. Use a subquery to find the books that are published by Sunshine Publishers.
 3. Find all editors who have written books that were published.
 4. Code a SELECT statement that shows a book title and ytd_sales for books whose ytd_sales is greater that the smallest value for zip code on the author table.  (Not useful, but fun.)
-5. Code a SELECT statement to see which editors are getting paid the highest salary.  
-
+5. Code a SELECT statement to see which editors are getting paid the highest salary.
+6. Take the following SELECT statement, that uses a join and rewrite it using a subquery.  
+```
+SELECT title, 'costs 12.99 and was written by Anne Singer'
+FROM book
+  JOIN bookauthor USING (ISBN)
+  JOIN author USING(author_id)
+WHERE price = 12.99 AND lastname = 'Singer' AND firstname = 'Anne'
+ORDER BY 1;
+```
+7. 
 
