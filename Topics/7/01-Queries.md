@@ -1,6 +1,6 @@
 ## Creating Tables and Manipulating Data  
 
-### Creating Tables 
+### Creating Tables  
 To create a table we use the CREATE TABLE statement. Here is a simplified view of its syntax...  
 ```
 	CREATE TABLE table_name
@@ -12,12 +12,12 @@ To create a table we use the CREATE TABLE statement. Here is a simplified view o
 	)
 ```
 
-**Data Types**
+**Data Types**  
 Character Datatypes
 Numeric Datatypes
 Date Datatype
 
-**Constraints**
+**Constraints**  
 After you specify the datatype for the column, you specify any constraints that are needed.  
 
 A constraint places further restrictions on the data that can be held in that column.  
@@ -30,7 +30,7 @@ The order in which you specify the columns does not matter to SQL, however, it i
 
 Other than that, define the columns in an order that makes the most sense.  For example, it makes sense to keep the first and last name next to each other.  
 
-### Specifying Keys
+### Specifying Keys  
 
 You need to be concerned about selecting a Primary Key when creating a table.  You may need to select a Foreign Key as well.  
 
@@ -51,7 +51,7 @@ CREATE TABLE bookauthor
 ```
 The PRIMARY KEY constraint is specified at the end of the column definitions.  
 
-**FOREIGN KEY CONSTRAINT**
+**FOREIGN KEY CONSTRAINT**  
 Foreign is any column (or combination of columns) in one table whose values refer back to the primary key of another table.  
 
 The database does not automatically enforce the foreign key rules unless you specify a specific FOREIGN KEY CONSTRAINT.  
@@ -83,7 +83,7 @@ For example, if I wanted to be sure that there was always a publisher in the pub
 	)
 ```
 
-### The Check Constraint 
+### The Check Constraint  
 
 A constraint places further restrictions on what data values may be stored in a column.  
 
@@ -126,7 +126,7 @@ You can use ANDs and ORs in the CHECK constraint criteria.  For example...
 	)
 ```
 
-### Creating Indexes
+### Creating Indexes  
 
 Indexes increase performance (speed)  
 Indexes provide logical pointers to a physical location  
@@ -140,7 +140,7 @@ Indexes are Created with the CREATE INDEX	statement
 CREATE  INDEX pub_id_idx
 ON book (pub_id);
 ```
-**Composite Index**
+**Composite Index**  
 You may use a composite index when two or more columns are searched as a logical unit	(e.g. firstname, lastname)  
 Columns do not have to be in the same order as table  
 ```
@@ -148,7 +148,7 @@ CREATE INDEX author_name_idx
 ON author (lastname, firstname);
 ```
 
-**UNIQUE Index**
+**UNIQUE Index**  
 The Primary Key will always have a unique index	built for it.  
 You may add a unique index to other columns...  
 ```
@@ -156,19 +156,19 @@ CREATE UNIQUE INDEX editor_ssn_idx
 ON editor (ssn);
 ```
 
-**Good Columns to Index**
+**Good Columns to Index**  
 Primary Key (done automatically with the 'primary key' clause)  
 Columns accessed in sorted order  
 Columns regularly used in Joins  
 Columns that are searched for a range of values  
 
-**Indexes that are Not Useful**
+**Indexes that are Not Useful**  
 Columns seldom referenced in the WHERE clause  
 Columns that have only 2 or 3 values  
 
-### Modifying and Removing Tables 
+### Modifying and Removing Tables   
 
-**Modifying Existing Tables**
+**Modifying Existing Tables**  
 Accomplished through the ALTER TABLE command  
 Use an ADD clause to add a column  
 Use a MODIFY clause to change a column  
@@ -206,14 +206,14 @@ DROP TABLE sometable;
 TRUNCATE TABLE sometable;
 ```
 
-### More Constraints 
+### More Constraints   
 
-**Adding Constraints to Existing Tables**
+**Adding Constraints to Existing Tables**  
 Constraints are added to an existing table with the	ALTER TABLE command  
 Add a NOT NULL constraint using MODIFY clause  
 All other constraints are added using ADD clause  
 
-**Using the NOT NULL Constraint**
+**Using the NOT NULL Constraint**  
 The NOT NULL constraint is a special CHECK constraint with 	IS NOT NULL condition  
 Can only be created at column level  
 Can only be added to an existing table using ALTER TABLE…MODIFY command  
@@ -222,7 +222,7 @@ ALTER TABLE book
 MODIFY (ytd_sales NOT NULL);
 ```
 
-**Primary Key Constraint**
+**Primary Key Constraint**  
 No duplicates are allowed in the referenced column  
 NULL values are NOT permitted  
 ```
@@ -230,7 +230,7 @@ ALTER TABLE book
 ADD CONSTRAINT book_pk PRIMARY KEY (title);
 ```
 
-**Using the UNIQUE Constraint**
+**Using the UNIQUE Constraint**  
 No duplicates are allowed in the referenced column  
 NULL values are permitted  
 ```
@@ -238,7 +238,7 @@ ALTER TABLE book
 ADD CONSTRAINT book_title_uk UNIQUE (title)
 ```
 
-**Using DISABLE/ENABLE**
+**Using DISABLE/ENABLE**  
 Use DISABLE or ENABLE clause of ALTER TABLE	statement  
 ```
 ALTER TABLE book
@@ -248,19 +248,19 @@ ALTER TABLE book
 ENABLE CONSTRAINT book_title_uk;
 ```
 
-**ALTER TABLE…DROP Syntax**
+**ALTER TABLE…DROP Syntax**   
 ```
 ALTER TABLE book
 DROP CONSTRAINT book_title_uk;
 ```
 
-### Adding data to a table 
+### Adding data to a table   
 
-### Changing data in a table 
+### Changing data in a table   
 
-### Removing data from a table 
+### Removing data from a table   
 
-### Assignment
+### Assignment  
 1. Create a Department table with a primary key of dept_num.
 2. Create an Employee table with a primary key of employee_id and a foreign key constraint on a dept_num column.
 3. Create a department table that enforces the rule that the dept_num must be between 100 and 900.
