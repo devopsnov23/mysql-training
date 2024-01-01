@@ -207,8 +207,7 @@ This is hard to visualize and always use a subquery instead!
 
 One of the main reasons for storing and managing data in a relational database is to reduce data redundancy.  
 
-The author's first and last name, for example, are stored in the author table.  The names are not stored again in the book table.  If we need to see the author names along  
-with the book information you join the related tables to retrieve that information.  
+The author's first and last name, for example, are stored in the author table.  The names are not stored again in the book table. If we need to see the author names along with the book information you join the related tables to retrieve that information.  
 
 The only data that is commonly (and necessarily) repeated is stored in Foreign Key columns.  This is what allows us to connect the information in the tables back together.  
 
@@ -231,7 +230,183 @@ Lastly, you apply the Normalization guidelines to reduce data redundancy.
 
 ### The Entity-Relationship Approach
 
+Entity-Relationship Modeling, or ER Modeling for short, is the process of identifying what persons, places, or things you are going track and discovering the relationships between those persons, places, or things.  
+
+The persons, places, or things you identify are called "Entities".  Ultimately an entity will be used to help design and create an actual database table in the database.  
+
+An entity (e.g. author) has attributes.  For example, an author has a firstname attribute, a lastname attribute, a phone number attribute, etc.  These attributes will be used to help define the columns that will go on the database table that will be built from the entity.  
+
+When doing data analysis, you may begin grouping data into the entities and the attributes, however, with ER Modeling you will just concentrate on the entities themselves and their relationship to each other.  
+
+Here is some data that a Real Estate company may want to track...  
+	Houses  
+	Agents  
+	Clients  
+	Sale Price  
+	Offer Price  
+
+What in the data list is an entity and what might be an attribute of an entity?  
+
+House seems like an entity since it can have attributes like address, number of bedrooms, sale price, etc.  
+
+Right away I notice that "sale price" is probably an attribute of House and not an entity itself.  
+
+What about the agents? Would it be best to have separate entities for a Internal Agent and a External Agent? Or should Agent be the Entity and what type of agent they are would be an attribute?  
+
+I will go with two separate entities and store the external clients with the external agent.  
+
+So far I have four entities...  
+  CLIENT  
+  AGENT-INTERNAL  
+  AGENT-EXTERNAL  
+  HOUSE  
+
+What are the relationships?  
+
+**IMPORTANT:**  You should always use the singular when naming entities or tables, since the entity/table name describes the type of entities that will be held in the rows of the table.  Clearly there can be more than one row!  
+
+A house can be bought by only one client, but a client could buy more than one house... so you have a ONE-TO-MANY from CLIENT to HOUSE  
+
+What about offers on a house? A client could make more than one offer on a single house (or multiple houses) and a house could have more than one offer made on it by clients of ours, however, our agency has a rule that we will not represent more than one person at time to a particular house.. so we are not make our clients compete with each other.  
+
+So now the relationship between CLIENT and HOUSE still is a ONE-TO-MANY... from our perspective.  
+
+What is the relationship of AGENT-INTERNAL to HOUSE?  
+
+An internal agent can sell (or list) more than one house but a house can only be represented by one agent (in our agency.)  
+
+Remember that I am modeling data for a single real estate agency.  The data I track only needs to reflect my agency's information... not all possible realities from a client or outside agents point of view.  
+
+An external agent can list/sell more than one house (to us) and house can be listed/sold by more than one external agent.  
+
+One advantage to having separate entities is we can track more information about our own employees (internal agents.)  
+
+An internal agent can have more than one client, but a client will have only one agent (of ours.)  
+
+An external agent may have more than one client (that they are representing to us) and, theoretically, that agent's client could be represented to us by different agents concerning different houses... but, since we are tying external clients directly to their external agents (in our database) we will not try to track external clients as unique entities.  
+
+For example, if Joe Smith is represented by Sally Jones on House 1 and Joe Smith is represented by Sam Mathers on House 2... as far as our database is concerned, Joe Smith is two different people!   It simply is not our concern to track external clients except as they relate to a particular house that we represent.  
+
+We do not need to track what an external agent is up to with his/her clients... except how it relates to our agency.  
+
 ### Normalization Guidelines 
+
+Normalization is a funny word.  
+
+It means to "normalize" the data, which is a fancy way of saying we are going to continue organizing the data so that data redundancy is greatly reduced.  
+
+This process is most often done after the ER modeling is completed.  
+
+The normalization guidelines are rules we can apply to the entities that may result in breaking up some entities, that seemed to make sense to stay together, into smaller entities that will reduce data redundancy.  
+
+As we go through this process of normalization, each step will bring the entity (or table) into various "forms". These normalization forms describe the state that the entity (or table) is in, according to the normalization rules that have been applied to them.  
+
+It seems a bit strange now but it will become clearer as you learn these normalization rules.  
+
+When you apply the first set of normalization rules the entity (or table) will be said to be in "First Normal Form."  
+
+When you apply the second set of normalization rules the entity (or table) will be said to be in "Second Normal Form."  
+
+When you apply the third set of normalization rules the entity (or table) will be said to be in "Third Normal Form."  
+
+Fortunately, this is usually where you stop the process.  
+
+While there are other Normal Forms defined, the goal of most data modelers is to bring the database into Third Normal Form.  
+
+A database is said to be in Third Normal Form when all of its tables are (at least) in Third Normal Form.  
+
+**NOTE:** In this presentation, I am going to give you a practical definition of the Normal Forms. This means I have simplified the definitions so you don't have to deal with academic terms.
+
+**First Normal Form**
+
+A table is in First Normal Form when the data in each column could not be reasonably broken down further into smaller pieces and there are no repeating groups.  
+
+A repeating group, for example, is something like pet 1, pet 2, pet 3, etc.  if I was keeping track of how many pets someone had.  
+
+Fortunately, there is something that you can do to remove a repeating group from a table and put it in first normal form correctly.  
+
+Let's look at tables as we have it so far:  
+
+CLIENT (name, address, phone, house, offer_1, offer_2, offer_3)  
+HOUSE (address, listing price, sold price)  
+AGENT-INTERNAL (name, years with agency)  
+AGENT-EXTERNAL (name, agency, external_client1, external_client2, etc.)  
+
+So we first need Primary Keys on the tables...  
+
+CLIENT (client_id-PK, name, address, phone, house, offer_1, offer_2, offer_3)  
+HOUSE (house_id-PK, address, listing price, sold price)  
+AGENT-INTERNAL (agent_id-PK, name, years with agency, house_1, house_2, etc.)  
+AGENT-EXTERNAL (ext_agent_id-PK, name, agency, ext_client1, ext_client2, etc.)  
+
+NOTE:  This format of listing table/entity names, then listing the columns/attributes in parentheses is known as Relational Notation.  
+
+Remove repeating groups...  
+
+CLIENT (client_id-PK, name, address, phone)  
+HOUSE (house_id-PK, address, listing price, sold price)  
+OFFER (client_id-PK, house_id-PK, offer_date-PK, offer, client name)  
+AGENT-INTERNAL (agent_id-PK, name, years with agency)  
+AGENT_INT_HOUSE (agent_id-PK-FK, house_id-PK-FK, agent name)  
+AGENT-INT_CLIENT (agent_id-PK-FK, client_id-PK-FK, last_name, first_name  
+AGENT-EXTERNAL (ext_agent_id-PK, name, agency)  
+AGENT-EXT_CLIENT (ext_agent_id-PK-FK, ext_client-PK-FK, house_id-PK-FK)  
+
+Break the data into smallest reasonable parts...  
+
+CLIENT (client_id-PK, first_name, last_name, street, city, state, zip, phone)  
+HOUSE (house_id-PK, street, city, state, zip, listing price, sold price)  
+OFFER (client_id-PK, house_id-PK, offer_date-PK, offer, last_name, first_name, street, city, state, zip)  
+AGENT-INTERNAL (agent_id-PK, last_name, first_name, years with agency)  
+AGENT_INT_HOUSE (agent_id-PK-FK, house,_id-PK-FK, last_name, first_name)  
+AGENT-INT_CLIENT (agent_id-PK-FK, client_id-PK-FK, last_name, first_name)  
+AGENT-EXTERNAL (ext_agent_id-PK, last_name, first_name, agency)  
+AGENT-EXT_CLIENT (ext_agent_id-PK-FK, ext_client-PK-FK, house_id-PK-FK)  
+
+**Second Normal Form**
+
+In order to be in Second Normal Form, a table must be in First Normal Form and no non-key column must be derived from another non-key column.  
+
+Remove non-key dependencies (address info...)  
+
+CLIENT (client_id-PK, first_name, last_name, street, city, state, zip, phone)  
+HOUSE (house_id-PK, street, city, state, zip, listing price, sold price)  
+OFFER (client_id-PK, house_id-PK, offer_date-PK, offer, last_name, first_name)  
+AGENT-INTERNAL (agent_id-PK, last_name, first_name, years with agency)  
+AGENT_INT_HOUSE (agent_id-PK-FK, house,_id-PK-FK, last_name, first_name)  
+AGENT-INT_CLIENT (agent_id-PK-FK, client_id-PK-FK, last_name, first_name)  
+AGENT-EXTERNAL (ext_agent_id-PK, last_name, first_name, agency)  
+AGENT-EXT_CLIENT (ext_agent_id-PK-FK, ext_client-PK-FK, house_id-PK-FK)  
+
+**Third Normal Form**
+
+In order to be in Third Normal Form, a table must be in Second Normal Form and all columns are fully dependent on the entire Primary Key.  
+
+Removing lastname, firstname...  
+
+CLIENT (client_id-PK, first_name, last_name, street, city, state, zip, phone)  
+HOUSE (house_id-PK, street, city, state, zip, listing price, sold price)  
+OFFER (client_id-PK, house_id-PK, offer_date-PK, offer)  
+AGENT-INTERNAL (agent_id-PK, last_name, first_name, years with agency)  
+AGENT_INT_HOUSE (agent_id-PK-FK, house,_id-PK-FK)  
+AGENT-INT_CLIENT (agent_id-PK-FK, client_id-PK-FK)  
+AGENT-EXTERNAL (ext_agent_id-PK, last_name, first_name, agency)  
+AGENT-EXT_CLIENT (ext_agent_id-PK-FK, ext_client-PK-FK, house_id-PK-FK)  
+
+Are there any other relationships, attributes?  
+
+CLIENT (client_id-PK, first_name, last_name, street, city, state, zip, phone)  
+HOUSE (house_id-PK, street, city, state, zip, listing price, sold price)  
+OFFER (client_id-PK, house_id-PK, offer_date-PK, offer, accepted_yn)  
+AGENT-INTERNAL (agent_id-PK, last_name, first_name, years with agency)  
+AGENT_INT_HOUSE (agent_id-PK-FK, house,_id-PK-FK, date_assigned)  
+AGENT-INT_CLIENT (agent_id-PK-FK, client_id-PK-FK, date_contracted)  
+AGENT-EXTERNAL (ext_agent_id-PK, last_name, first_name, agency)  
+AGENT-EXT_CLIENT (ext_agent_id-PK-FK, ext_client_id-PK-FK, house_id-PK-FK)  
+
+An easy way to remember if a table is in third normal form is...  
+A table is in third normal form if every non-key column is dependent on the key, the whole key, and nothing but the key  
+
 
 ### Assignment 
 1. Name some advantages and disadvantages to generating an "IN" list with another SELECT statement.
@@ -248,5 +423,6 @@ FROM book
 WHERE price = 12.99 AND lastname = 'Singer' AND firstname = 'Anne'
 ORDER BY 1;
 ```
-7. 
+7. Think about organizations or companies you have worked for.   What kind of data was being tracked?   What kind of entities do you think were used in the design of the database (e.g. Employee, Department, etc.)
+
 
