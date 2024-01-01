@@ -101,6 +101,46 @@ WHERE author_id IN
 ORDER BY 1, 2;
 ```
 ### Subqueries using a comparison operator 
+For most subqueries you use the IN operator to compare a column value to a list of column values brought back by another SELECT statement.  This type of comparison is always looking for equality.  
+
+There is another type of subquery where you use a regular comparison operator (like =, >, <, etc.) instead of the IN operator.  
+
+When you use a comparison operator, instead of an IN, the inner query MUST return exactly one single value  (i.e. one row, one cell) otherwise it is an error condition.  
+
+How can you be absolutely sure you get one value returned from a SELECT statement?  
+
+Use an aggregate function like AVG or SUM....  
+```
+SELECT title, price
+FROM book
+WHERE price >
+  (SELECT AVG(price)
+   FROM book)
+ORDER BY 1;
+```
+
+Another Example...  
+```
+SELECT title, ytd_sales, price
+FROM book
+WHERE ytd_sales >
+  (SELECT SUM(ytd_sales) - 30000
+   FROM book
+   WHERE price < 20)
+ORDER BY 1, 2, 3;
+```
+You can use a subquery with the HAVING clause...  
+```
+SELECT type, SUM(ytd_sales)
+FROM book
+GROUP BY type
+HAVING AVG(ytd_sales) >
+  (SELECT AVG(ytd_sales)
+   FROM book)
+ORDER BY 1, 2;
+```
+
+
 
 ### Subqueries Vs Joins  
 
@@ -115,7 +155,8 @@ ORDER BY 1, 2;
 ### Assignment 
 1. Name some advantages and disadvantages to generating an "IN" list with another SELECT statement.
 2. Use a subquery to find the books that are published by Sunshine Publishers.
-3. Find all editors who have written books that were published.  
+3. Find all editors who have written books that were published.
+4. Code a SELECT statement that shows a book title and ytd_sales for books whose ytd_sales is greater that the smallest value for zip code on the author table.  (Not useful, but fun.)
+5. Code a SELECT statement to see which editors are getting paid the highest salary.  
 
-### Assignment 
 
