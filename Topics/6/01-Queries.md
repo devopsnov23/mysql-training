@@ -60,7 +60,46 @@ ORDER BY 1, 2, 3;
 ... because the inner query has generated a list of cities and states that the statement is comparing to city value alone.  
 
 ### Subqueries with the IN operator 
+The IN operator will always compare the values for equality against value of the column specified.  
 
+Here is how to generally format a subquery...
+```
+SELECT lastname, firstname, 'wrote more than one book'
+FROM author
+WHERE author_id IN
+  (SELECT DISTINCT author_id
+   FROM bookauthor
+   GROUP BY author_id
+   HAVING count(*) > 1)
+ORDER BY 1, 2;
+```
+The SELECT statement within the parenthesis is referred to as an "Inner Query".  
+The SELECT statement that starts on the first line is referred to as the "Outer Query."  
+
+With a subquery you can get results from a table using information from that same table...  
+```
+SELECT title, price
+FROM book
+WHERE price IN
+  (SELECT DISTINCT price
+   FROM book
+   WHERE title LIKE 'How%')
+ORDER BY 1, 2;
+```
+
+You can nest subquery statements.  For example, if I want to see which authors sell books that cost 12.99...  
+```
+SELECT lastname, firstname, 'sell books at 12.99'
+FROM author
+WHERE author_id IN
+  (SELECT author_id
+   FROM bookauthor
+   WHERE isbn IN
+     (SELECT isbn
+      FROM book
+      WHERE price = 12.99))
+ORDER BY 1, 2;
+```
 ### Subqueries using a comparison operator 
 
 ### Subqueries Vs Joins  
@@ -74,7 +113,9 @@ ORDER BY 1, 2, 3;
 ### Normalization Guidelines 
 
 ### Assignment 
-1. Name some advantages and disadvantages to generating an "IN" list with another SELECT statement.  
+1. Name some advantages and disadvantages to generating an "IN" list with another SELECT statement.
+2. Use a subquery to find the books that are published by Sunshine Publishers.
+3. Find all editors who have written books that were published.  
 
 ### Assignment 
 
