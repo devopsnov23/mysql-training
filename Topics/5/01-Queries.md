@@ -68,6 +68,8 @@ ORDER BY 1, 2, 3;
 
 ### Outer Joins
 
+![image](https://github.com/devopsnov23/mysql-training/assets/150913274/b70b3373-2a94-43e0-8887-b85b4f0a12ae)
+
 Thus far, when joining tables you have only return a row into the Result Set if there was a match.  
 ```
 SELECT e.lastname, e.firstname, editor_position
