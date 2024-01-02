@@ -29,8 +29,7 @@ WHERE price BETWEEN 20 AND 40
 ORDER BY 2;
 ```
 
-**NOTE:**  While using the BETWEEN instead of mathematical operators is a bit easier to read, it generally runs slower.  If you are querying against large tables you may want to stick with using  
-mathematical operators instead of the BETWEEN.  
+**NOTE:**  While using the BETWEEN instead of mathematical operators is a bit easier to read, it generally runs slower. If you are querying against large tables you may want to stick with using mathematical operators instead of the BETWEEN.  
 
 ### Using the Like operator for pattern matching 
 
