@@ -58,16 +58,16 @@ GRANT
   Usage:ONdb_name.tbl_name  
   Examples: ALTER, CREATE, DELETE, DROP, INSERT, UPDATE, etc.  
   Stored in the mysql.tables_priv system table.  
-- Column privileges - Applies to specific columns within a table.
-  Usage:GRANT priv_type (coll[,col2]) on db_name.tbl_name TO 'user'@'host’;  
+- Column privileges - Applies to specific columns within a table.  
+  Usage: GRANT priv_type (coll[,col2]) on db_name.tbl_name TO 'user'@'host’;  
   Examples: INSERT, UPDATE, SELECT, etc.  
-  Stored in mysql.column_priv system table.  
-- Storedroutine privileges - Applies to stored routines such as procedures and functions
-  Usage:ON db_name.x or ON db_name. routine_name  
+  Stored in mysql.column_priv system table.    
+- Storedroutine privileges - Applies to stored routines such as procedures and functions  
+  Usage: ON db_name.x or ON db_name. routine_name  
   Examples: ALTERROUTINE, EXECUTE, etc.  
   Stored in the mysqlprocs_priv system table.  
-- Proxy user privileges - Allows a user to be a proxy for another user.
-  Usage:GRANT PROXY ON 'localuser'@' localhost’ TO ‘externaluser'@'externalhost’;  
+- Proxy user privileges - Allows a user to be a proxy for another user.  
+  Usage: GRANT PROXY ON 'localuser'@' localhost’ TO ‘externaluser'@'externalhost’;  
   The only privilege allowed in the grant proxy statement is PROXY.  
   Stored in the mysql proxies_priv system table.  
 
