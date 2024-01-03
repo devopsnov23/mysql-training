@@ -47,15 +47,15 @@ GRANT
 
 **Privilege Levels**  
 - Global privileges - Applies to administrative privileges or privileges to all databases.  
-  Usage:ON*.*  
+  Usage: ON*.*  
   Examples: CREATE USER, SHOW DATABASES, etc.  
   Stored in the mysqluser system table.  
 - Database privileges - Appliesto objectsin a database.  
-  Usage:ONdb_name*  
+  Usage: ONdb_name*  
   Examples: CREATE, DROP, etc.  
   Stored in the mysql.db system table.  
 - Table privileges - Applies toall columnsin a table.  
-  Usage:ONdb_name.tbl_name  
+  Usage: ONdb_name.tbl_name  
   Examples: ALTER, CREATE, DELETE, DROP, INSERT, UPDATE, etc.  
   Stored in the mysql.tables_priv system table.  
 - Column privileges - Applies to specific columns within a table.  
@@ -89,5 +89,47 @@ mysql> REVOKE priv_type [(col_list)] ON priv_level FROM ‘user'@'host’;
 ```
 
 ### Creating and Assigning Roles 
+
+**Working with Roles**  
+Createroles:  
+```
+mysql> CREATE ROLE rolel [, role2 ] ...
+```
+
+Assign privileges to role:  
+```
+mysql> GRANT priv_type ON priv_level to role;
+```
+
+Assign roles to users:  
+```
+mysql> GRANT role TO 'user'@'host’;
+``
+
+Show roles for a user:
+```
+mysql> SHOW GRANTS FOR 'user'@'host’;
+mysql> SHOW GRANTS FOR 'user'@'host’ USING role;
+```
+
+Display roles using the current_role() function:
+```
+mysql> SELECT current_role();
+```
+
+Set default roles for user:
+```
+mysql> SET DEFAULT ROLE ALL TO 'user'@'host’;
+```
+
+Remove a role from a user:
+```
+mysql> REVOKE role FROM 'user'@'host’;
+```
+
+Delete a role:
+```
+mysql> DROP ROLE role [, rolel;
+``
 
 ### Assignment 
