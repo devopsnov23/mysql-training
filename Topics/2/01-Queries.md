@@ -112,14 +112,67 @@ This will NOT work:
 ```
 
 ### The Count Functions  
+```
+SELECT COUNT(advance)
+FROM book;
+```
+When you use COUNT(*), NULLs are not an issue since the COUNT(*) is not "looking" at any values in any columns.  
+```
+SELECT COUNT(*)
+FROM book;
+```
+
+```
+SELECT COUNT(*)
+FROM author
+WHERE lastname = 'Singer';
+```
+
+```
+SELECT COUNT(*), COUNT(advance)
+FROM book;
+```
 
 ### The Min and Max Functions  
+Some Examples...  
+```
+SELECT MIN(advance), MAX(advance)
+FROM book;
+
+SELECT MIN(lastname), MAX(lastname)
+FROM author;
+
+SELECT MIN(pubdate), MAX(pubdate)
+FROM book;
+```
 
 ### The Avg and Sum Functions  
+Example...
+```
+SELECT SUM(advance)
+FROM book;
+```
+
+```
+SELECT AVG(advance)
+FROM book;
+```
 
 ### Concatenating Data  
+```
+SELECT CONCAT('Average price is: ', AVG(price))
+  FROM book;
+```
 
 ### Assignment  
 1. Code a SELECT statement that shows all book titles published by Binder and Smith.
 2. Code a SELECT statement that joins the zip code in the author table to the year-to-date sales number in the book table. Show the author's name and the book title if you get a match.
-3. 
+3. Code a SQL statement to show how many books have been published by "Binder and Smith"
+4. Code a SQL statment that shows how many authors live in a city where a publisher is based.
+5. Code a SQL statement to show which book is listed first (alphabetically) that is published by "Binder and Smith"
+6. Code a SQL statement that shows how many authors live in a city where a publisher is based.
+7. Code a SQL statement to show the average price charged for books published by "All Techo Books"
+8. Code a SQL statement to show the total number of books sold by "Sunshine Publishers"
+9. Code a SQL statement to show information for each author in a single result column in the following format:  
+   John Smith is an Author who lives in Oakland, CA
+
