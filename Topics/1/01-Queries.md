@@ -67,6 +67,36 @@ FROM book;
 ```
 
 ### Sorting the results using column names  
+You can sort the Result Set in order by column name using the ORDER BY clause.  
+
+A simple sort just involves one column name.  
+```
+SELECT title, price
+FROM book
+WHERE price > 20
+ORDER BY title;
+```
+
+```
+SELECT title, price
+FROM book
+WHERE price > 20
+ORDER BY title DESC;
+```
+
+Sorting is Ascending by default and descending when you specify DESC after the column name in the Order By clause.  
+
+For numeric information ascending means to sort from the lowest numeric value to the highest.  
+
+With textual information the sort is actually in ASCII character sequence order. This means that lowercase letters are sorted "higher" in the list than uppercase letters.  
+
+You can have one sort within another sort by specifying more than one column.  
+```
+SELECT type, price
+FROM book
+ORDER BY type, price;
+```
+Notice that the price information is sorted within each type grouping.  
 
 ### Primary Key  
 
@@ -82,6 +112,7 @@ FROM book;
 1. Code a SELECT statement that lists all the data for the book table.
 2. Code a SELECT statement that lists each book's title and the number of books that have been sold year-to-date for each title.
 3. Code a SELECT statement that lists each book's title and shows the advance, the revenue, and the difference between the advance and revenue.
-4. 
+4. Code a SELECT statement that lists each book's advance and price. Sort the information so that the price data is in descending order within each advance grouping.
+5. 
 
 
