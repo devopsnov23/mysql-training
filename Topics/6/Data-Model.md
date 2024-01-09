@@ -1,8 +1,8 @@
-![image](https://github.com/devopsnov23/mysql-training/assets/150913274/58442870-c9ed-4d99-9322-d784ab269a9d)## Data Model
+## Data Model  
 
 ### Basic Concepts of Entity-Relationship Model
 
-**Terminologies **  
+**Terminologies**   
 - Entity 
 - Attributes (Properties that describe the entity) 
 - Simple Attirbutes (Eg: Age)   
