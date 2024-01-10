@@ -95,12 +95,38 @@ Conceptually...
 - You may write custom functions
 - These function may apply on a per row basis, like TO_CHAR, ROUND, SUBSTR, etc.  
 
-
-### Stored Routines  
-
 ### Events  
+Uniquely identified by its name and the database it is assigned to.  
+Can be a single SQL statement or a compound statement  
+(using BEGIN..END).
+Can be scheduled as a one time event or reoccurring.  
+Reoccurring events can be given a specific start time, end time, both, or neither.  
+Events that already exist can be modified.  
+Events are executed by the Event Scheduler.  
 
-### Database Integrity  
+Turn the Event Scheduler on or off:  
+```
+mysql> SET GLOBAL event_scheduler = ON|OFF;
+```
+Create an event:  
+```
+mysql> CREATE EVENT event_name ON SCHEDULE schedule DO event_body;
+```
+
+Show events:  
+```
+mysql> SHOW EVENTS [FROM db_name] ;
+```
+
+Modify an existing event  
+```
+mysql> ALTER EVENT event_name [ON SCHEDULE schedule] [DO event_body];
+```
+
+Delete an event  
+```
+mysql> DROP EVENT event_name;
+```
 
 ### Assignment  
 1. Give the userids, perrys and landeyt, the ability to make changes to existing data on the author table (except the author_id column) and to add new rows of data but not delete them.  Of course, they should be able
