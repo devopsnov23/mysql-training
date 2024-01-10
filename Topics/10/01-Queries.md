@@ -98,7 +98,7 @@ Conceptually...
 ### Events  
 Uniquely identified by its name and the database it is assigned to.  
 Can be a single SQL statement or a compound statement  
-(using BEGIN..END).
+(using BEGIN..END).  
 Can be scheduled as a one time event or reoccurring.  
 Reoccurring events can be given a specific start time, end time, both, or neither.  
 Events that already exist can be modified.  
